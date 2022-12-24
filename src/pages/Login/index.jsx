@@ -1,17 +1,17 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAuth, selectIsAuth } from '../../redux/slices/auth';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 
-import styles from './Login.module.scss';
+import styles from "./Login.module.scss";
 
 export const Login = () => {
   const isAuth = useSelector(selectIsAuth);
@@ -22,28 +22,26 @@ export const Login = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    defaultValues: {
-      email: 'email@email.com',
-      password: 'password',
-    },
-    mode: 'onChange',
+    mode: "onChange",
   });
 
   const onSubmit = async (values) => {
-    const data = await dispatch(fetchAuth(values));
+    const data = dispatch(fetchAuth(values));
 
     if (!data.payload) {
-      return alert('Не удалось авторизоваться');
+      return alert("Не удалось авторизоваться");
     }
 
-    if ('token' in data.payload) {
-      window.localStorage.setItem('token', data.payload.token);
+    if ("token" in data.payload) {
+      window.localStorage.setItem("token", data.payload.token);
     }
   };
 
   if (isAuth) {
     return <Navigate to="/" />;
   }
+
+  console.log(isAuth);
 
   return (
     <Paper classes={{ root: styles.root }}>
@@ -57,7 +55,7 @@ export const Login = () => {
           type="email"
           error={Boolean(errors.email?.message)}
           helperText={errors.email?.message}
-          {...register('email', { required: 'Укажите почту' })}
+          {...register("email", { required: "Укажите почту" })}
           fullWidth
         />
         <TextField
@@ -66,10 +64,16 @@ export const Login = () => {
           type="password"
           error={Boolean(errors.password?.message)}
           helperText={errors.password?.message}
-          {...register('password', { required: 'Укажите пароль' })}
+          {...register("password", { required: "Укажите пароль" })}
           fullWidth
         />
-        <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
+        <Button
+          disabled={!isValid}
+          type="submit"
+          size="large"
+          variant="contained"
+          fullWidth
+        >
           Войти
         </Button>
       </form>

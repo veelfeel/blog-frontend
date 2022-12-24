@@ -1,18 +1,18 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchRegister, selectIsAuth } from '../../redux/slices/auth';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRegister, selectIsAuth } from "../../redux/slices/auth";
 
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
 
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 
-import styles from './Login.module.scss';
+import styles from "./Login.module.scss";
 
 export const Registration = () => {
   const isAuth = useSelector(selectIsAuth);
@@ -23,12 +23,7 @@ export const Registration = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    defaultValues: {
-      fullName: 'Владислав',
-      email: 'vlad@email.com',
-      password: '1234',
-    },
-    mode: 'onChange',
+    mode: "onChange",
   });
 
   const onSubmit = async (values) => {
@@ -37,10 +32,10 @@ export const Registration = () => {
     console.log(data.payload);
 
     if (!data.payload) {
-      return alert('Не удалось зарегистрироваться');
+      return alert("Не удалось зарегистрироваться");
     }
-    if ('token' in data.payload) {
-      window.localStorage.setItem('token', data.payload.token);
+    if ("token" in data.payload) {
+      window.localStorage.setItem("token", data.payload.token);
     }
   };
 
@@ -60,7 +55,7 @@ export const Registration = () => {
         <TextField
           error={Boolean(errors.fullName?.message)}
           helperText={errors.fullName?.message}
-          {...register('fullName', { required: 'Укажите полное имя' })}
+          {...register("fullName", { required: "Укажите полное имя" })}
           className={styles.field}
           label="Полное имя"
           fullWidth
@@ -69,7 +64,7 @@ export const Registration = () => {
           type="email"
           error={Boolean(errors.email?.message)}
           helperText={errors.email?.message}
-          {...register('email', { required: 'Укажите почту' })}
+          {...register("email", { required: "Укажите почту" })}
           className={styles.field}
           label="E-Mail"
           fullWidth
@@ -78,12 +73,18 @@ export const Registration = () => {
           type="password"
           error={Boolean(errors.password?.message)}
           helperText={errors.password?.message}
-          {...register('password', { required: 'Укажите пароль' })}
+          {...register("password", { required: "Укажите пароль" })}
           className={styles.field}
           label="Пароль"
           fullWidth
         />
-        <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
+        <Button
+          disabled={!isValid}
+          type="submit"
+          size="large"
+          variant="contained"
+          fullWidth
+        >
           Зарегистрироваться
         </Button>
       </form>
